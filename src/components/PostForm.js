@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {createPost} from '../redux/actions'
+import {createPost, showAlert} from '../redux/actions'
+import Alert from './Alert'
 
 class PostForm extends Component {
     constructor(props) {
@@ -14,7 +15,7 @@ class PostForm extends Component {
         e.preventDefault()
         const {title} = this.state
         if(!title.trim()){
-            return
+            return this.props.showAlert(`Post title shouldn't empty`)
         }
         const newPost = {
             title, id: Date.now().toString()
@@ -31,6 +32,11 @@ class PostForm extends Component {
     render() {
         return (
             <form onSubmit={this.submitHandler}>
+                {
+                    this.props.alert && 
+                    <Alert message = {this.props.alert}/>
+                }
+               
                 <div className="mb-3">
                     <label htmlFor="title" className="form-label">Post title</label>
                     <input type="text" name ="title" className="form-control" id="title" value = {this.state.title} onChange = {this.changeInputHandler}/>
@@ -42,6 +48,10 @@ class PostForm extends Component {
 }
 
 const mapDispatchToProps = {
-    createPost
+    createPost,
+    showAlert
 }
-export default connect(null, mapDispatchToProps)(PostForm)
+const mapStateToProps = state =>({
+    alert: state.app.alert
+})
+export default connect(mapStateToProps, mapDispatchToProps)(PostForm)
