@@ -1,4 +1,4 @@
-import { CREATE_POST, FETCH_POSTS, SHOW_LOADER, HIDE_LOADER, SHOW_ALERT, HIDE_ALERT } from "./types";
+import { CREATE_POST, SHOW_LOADER, HIDE_LOADER, SHOW_ALERT, HIDE_ALERT, REQUEST_POSTS } from "./types";
 
 export function createPost(post) {
     return {
@@ -40,6 +40,7 @@ export function hideAlert() {
     }
 }
 
+/*
 export function fetchPosts() {
     return async dispatch => {
         try {
@@ -52,9 +53,13 @@ export function fetchPosts() {
             dispatch(showAlert('Something went wrong...'));
             dispatch(hideLoader());
         }
-
-
     }
 
 }
+*/
 
+export function fetchPosts(){
+    return {
+        type: REQUEST_POSTS
+    }
+}
